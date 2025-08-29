@@ -1,7 +1,7 @@
-## Page Weight Calculator App:
+# Page Weight Calculator App:
 
 
-# Implemented:
+## Implemented:
 
 - 3 Cards:
 1) Displays calculated weight and a field to change number of sheets.
