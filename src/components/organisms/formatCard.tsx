@@ -5,12 +5,28 @@ import { theme } from "../../styles/styles";
 
 import { makeStyles } from "tss-react/mui";
 import Formats from "../molecules/formats";
+import { PageProps } from "../../screens/pageCalculator";
 
 
-const FormatCard = () =>{
+const FormatCard = ({length, width, grammage, numberOfSheets, format, din, setLength, setWidth, setGrammage, setNumberOfSheets, setFormat, setDin
+} : PageProps) =>{
     return(
         <Card direction="column">
-            <Formats/>
+            <Formats
+                length= {length}
+                width= {width}
+                grammage= {grammage}
+                numberOfSheets= {numberOfSheets}
+                format= {format}
+                din= {din}
+
+                setLength= {setLength}
+                setWidth= {setWidth}
+                setGrammage = {setGrammage}
+                setNumberOfSheets = {setNumberOfSheets}
+                setFormat = {setFormat}
+                setDin = {setDin}
+            />
         </Card>
     )
 }

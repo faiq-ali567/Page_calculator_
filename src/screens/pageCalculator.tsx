@@ -1,11 +1,6 @@
 import React, { useEffect } from "react";
 import PageWeightCalulator from "/Users/faiqali/Documents/page_weight/src/components/templates/pageWeightCalulator";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState, AppDispatch } from "../store/index";
-import { setFormat, setGrammage, setDins } from "../store/pageSlice";
-import Edit from "../components/molecules/edit";
-import EditCard from "../components/organisms/editCard";
-
+import useLocalStorage from "../hooks/useLocalStorage";
 
 
 export const paperSizes = {
@@ -21,13 +16,38 @@ export const dins = {
   "DIN A": 80,
   "DIN B": 100,
   "DIN C": 90,
-  "JIS B": 80,
+  "JIS B": 85,
   "US Formats": 75
 };
 
+
+
+export interface PageProps {
+    length: number;
+    width: number;
+    grammage: number;
+    numberOfSheets: number;
+    format: string;
+    din: string;
+
+    setLength: (value: number) => void;
+    setWidth: (value: number) =>void;
+    setGrammage: (value: number) =>void;
+    setNumberOfSheets: (value: number) =>void;
+    setFormat: (value: string) => void;
+    setDin: (value: string) => void;
+}
+
+
+
 const PageCalculator = () =>{
-    const dispatch = useDispatch<AppDispatch>();
-    const {length, width, grammage, numberOfSheets, format, din} = useSelector((state: RootState) => state.page)
+
+    const [length, setLength] = useLocalStorage<number>("length", 10);
+    const [width, setWidth] = useLocalStorage<number>("width",10);
+    const [grammage, setGrammage] = useLocalStorage<number>("grammage",10);
+    const [numberOfSheets, setNumberOfSheets] = useLocalStorage<number>("numberOfSheets",10);
+    const [format, setFormat] = useLocalStorage<string>("format", "A2");
+    const [din, setDin] = useLocalStorage<string>("din", "DIN A")
     useEffect(()=> {
         let ok = 0;
         for (const key in paperSizes) {
@@ -36,11 +56,11 @@ const PageCalculator = () =>{
                 width === paperSizes[key as keyof typeof paperSizes].width
             ) {
                 ok++;
-                dispatch(setFormat(key))
+                setFormat(key)
             }
         }
         if(ok == 0){
-            dispatch(setFormat("›Custom Format"))
+            setFormat("Custom Format")
         }
     },[length, width])
 
@@ -51,17 +71,31 @@ const PageCalculator = () =>{
                 grammage === dins[key as keyof typeof dins]
             ) {
                 ok++;
-                dispatch(setDins(key))
+                setDin(key)
             }
         }
         if(ok == 0){
-            dispatch(setDins("Custom Grammage"))
+            setDin("Custom Grammage")
         }
     },[grammage, din])
 
     return(
         <>
-           <PageWeightCalulator/>
+           <PageWeightCalulator
+            length= {length}
+            width= {width}
+            grammage= {grammage}
+            numberOfSheets= {numberOfSheets}
+            format= {format}
+            din= {din}
+
+            setLength= {setLength}
+            setWidth= {setWidth}
+            setGrammage = {setGrammage}
+            setNumberOfSheets = {setNumberOfSheets}
+            setFormat = {setFormat}
+            setDin = {setDin}
+           />
             
         </>
     )

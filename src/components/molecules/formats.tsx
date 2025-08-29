@@ -2,10 +2,7 @@ import React from "react";
 import { Card } from "@mui/material";
 import { theme } from "../../styles/styles";
 import { makeStyles } from "tss-react/mui";
-import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "../../store";
-import { setGrammage, setLength, setWidth } from "../../store/pageSlice";
-import { dins, paperSizes } from "../../screens/pageCalculator";
+import { dins, PageProps, paperSizes } from "../../screens/pageCalculator";
 
 
 const useStyles = makeStyles()(() => ({
@@ -27,10 +24,9 @@ const useStyles = makeStyles()(() => ({
 
 
 
-const Formats = () =>{
+const Formats = ({length, width, grammage, numberOfSheets, format, din, setLength, setWidth, setGrammage, setNumberOfSheets, setFormat, setDin
+} : PageProps) =>{
     const { classes } = useStyles();
-    const dispatch = useDispatch<AppDispatch>();
-    const {length, width, grammage, numberOfSheets, format, din} = useSelector((state: RootState) => state.page)
 
     
     return(
@@ -42,8 +38,8 @@ const Formats = () =>{
                 key={key}
                 className={classes.button}
                 onClick={() => {
-                dispatch(setLength(paperSizes[key as keyof typeof paperSizes].length));
-                dispatch(setWidth(paperSizes[key as keyof typeof paperSizes].width));
+                    setLength(paperSizes[key as keyof typeof paperSizes].length);
+                    setWidth(paperSizes[key as keyof typeof paperSizes].width);
                 }}>
                 {key}
             </button>
@@ -57,7 +53,7 @@ const Formats = () =>{
                 key={key}
                 className={classes.button}
                 onClick={() => {
-                    dispatch(setGrammage(dins[key as keyof typeof dins]));
+                    setGrammage(dins[key as keyof typeof dins]);
                 }}>
                 {key}
             </button>

@@ -1,18 +1,13 @@
 import React from "react";
 import TextField from "@mui/material/TextField";
-import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "../../store";
-import { setNumberOfSheets } from "../../store/pageSlice";
+import { PageProps } from "../../screens/pageCalculator";
 
 
 
 
 
-const WeightInfo = ()=>{
-
-    
-    const dispatch = useDispatch<AppDispatch>();
-    const {length, width, grammage, numberOfSheets, format, din} = useSelector((state: RootState) => state.page)
+const WeightInfo = ({length, width, grammage, numberOfSheets, format, din, setLength, setWidth, setGrammage, setNumberOfSheets, setFormat, setDin
+} : PageProps)=>{
 
     return(
         <div>
@@ -26,7 +21,7 @@ const WeightInfo = ()=>{
                 type="number"
                 label="Number of sheets"
                 value={numberOfSheets}
-                onChange={(val)=>{dispatch(setNumberOfSheets(Number(val.target.value)))}}
+                onChange={(val)=>{setNumberOfSheets(Number(val.target.value))}}
             />
         </div>
     )
